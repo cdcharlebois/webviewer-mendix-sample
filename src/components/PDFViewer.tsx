@@ -117,6 +117,15 @@ const PDFViewer: React.FC<InputProps> = props => {
             wvInstance.UI.loadDocument(props.file);
         }
     }, [wvInstance, props.file]);
+    useEffect(() => {
+        return () => {
+            // dispose of the editor on unmount.
+            if (wvInstance) {
+                console.debug(">> Disposing WebViewer Instance");
+                wvInstance.UI.dispose();
+            }
+        }
+    });
 
     return <div className="webviewer" style={{ height: props.containerHeight }} ref={viewerRef}></div>;
 };
